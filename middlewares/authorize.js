@@ -1,15 +1,17 @@
-const Article = require('../models/article')
+const Product= require('../models/product')
 
 module.exports = function(req, res, next) {
     
     try {
        
-        Article.findOne({
+        Product.findOne({
             _id: req.params.id
         })
         .then(result => {
             
-            if(result && result.user == req.author) {
+            if(result && result.seller == req.userLogin) {
+                console.log(result.seller)
+                console.log(req.userLogin)
                 next()
             } else {
                 throw new Error(`Bad request`)

@@ -1,10 +1,13 @@
 const { Cart, User, Product } = require('../models/')
 class ControllerProduct {
-    static create(req, res) {
-        const { name, quantity, seller, image, price } = req.body
+    static createProduct(req, res) {
+        console.log(req.body)
+        const { name, quantity, price } = req.body
+        // const image = req.file
+        const seller = req.userLogin
         Product
             .create({
-                name, quantity, seller, image, price
+                name, quantity, seller, price
             })
             .then(succes => {
                 res.status(201).json(succes)
@@ -15,7 +18,7 @@ class ControllerProduct {
             })
     }
 
-    static listAll(req, res) {
+    static getAllProduct(req, res) {
         Product
             .find({})
             .populate('seller')
@@ -26,27 +29,29 @@ class ControllerProduct {
                 res.status(500).json(err)
             })
     }
-    // static myList(req, res) {
-    //     Product
-    //         .find({ seller: req.author })
-    //         .then(results => {
-    //             res.status(200).json(results)
-    //         })
-    //         .catch(err => {
-    //             res.status(500).json(err)
-    //         })
-    // }
+
+    static myList(req, res) {
+        Product
+            .find({ seller: req.author })
+            .then(results => {
+                res.status(200).json(results)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    }
+
     static findOne(req, res) {
         Product.findOne({
             _id: req.params.id
         })
-        .populate('user')
-        .then(result => {
-            res.status(200).json(result)
-        })
-        .catch(err => {
-            res.status(500).json(err)
-        })
+            .populate('user')
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
     }
 
     static update(req, res) {
@@ -66,27 +71,15 @@ class ControllerProduct {
         Product.deleteOne({
             _id: req.params.id
         })
-        .then(() => {
-            res.status(200).json({
-                message: 'Deleted'
+            .then(() => {
+                res.status(200).json({
+                    message: 'Deleted'
+                })
             })
-        })
-        .catch(err => {
-            res.status(500).json(err)
-        })
+            .catch(err => {
+                res.status(500).json(err)
+            })
     }
-    
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
 module.exports = ControllerProduct

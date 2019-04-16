@@ -1,7 +1,7 @@
-const { User} = require('../models')
+const { User } = require('../models')
 const { bcrypt, jwt } = require('../helpers')
 const { OAuth2Client } = require('google-auth-library')
-const client = new OAuth2Client(process.env.CLIENT_ID)
+// const client = new OAuth2Client(process.env.CLIENT_ID)
 class userController {
     static register(req, res) {
         let { name, email, password } = req.body
@@ -23,8 +23,6 @@ class userController {
             email: req.body.email
         })
             .then(found => {
-                // console.log(req.body.password)
-                // console.log(found)
                 if (found && bcrypt.compare(req.body.password, found.password)) {
                     let access_token = jwt.sign({                        
                         email: found.email,

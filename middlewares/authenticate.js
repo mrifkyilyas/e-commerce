@@ -4,7 +4,8 @@ module.exports = function (req, res, next) {
     if(req.headers.hasOwnProperty('access_token')) {
         try {
             const decoded = jwt.verify(req.headers.access_token)
-            req.author = decoded.id
+            req.userLogin = decoded.id
+            console.log(req.userLogin)
             console.log('auth')
             next()
         } catch(err) {
