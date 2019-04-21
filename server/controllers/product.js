@@ -31,8 +31,9 @@ class ControllerProduct {
     }
 
     static myList(req, res) {
+        console.log('masuk my list')
         Product
-            .find({ seller: req.author })
+            .find({ seller: req.userLogin })
             .then(results => {
                 res.status(200).json(results)
             })

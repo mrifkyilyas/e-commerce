@@ -24,10 +24,12 @@ class userController {
         })
             .then(found => {
                 if (found && bcrypt.compare(req.body.password, found.password)) {
+                    console.log('masuk======')
                     let access_token = jwt.sign({                        
                         email: found.email,
                         id:found._id
                     })
+                    console.log(',masuk sini ')
                     res.status(200).json({
                         access_token,name:found.name
                     })

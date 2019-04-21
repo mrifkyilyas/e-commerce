@@ -1,0 +1,80 @@
+<template>
+<div>
+  <br>
+  <br>
+  <br>
+  <div class="container-fluid py-8 row ">
+    <div class="card text-left col-6 mx-auto py-10">
+      <div class="card-body">
+        <form>
+          <h1>add Product</h1>
+          <div class="form-group">
+            <label for="exampleInputName">name</label>
+            <input type="name" class="form-control" id="exampleInputName" aria-describedby="nameHelp" ref="name"
+              placeholder="Enter name">
+          </div>
+           <div class="form-group">
+            <label for="exampleInputQuantity">quantity</label>
+            <input type="number" class="form-control" id="exampleInputQuantity" aria-describedby="quantityHelp" ref="quantity"
+              placeholder="Enter quantity">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputprice">price</label>
+            <input type="Number" class="form-control" id="exampleInputprice" ref="price" placeholder="price">
+          </div>
+          
+          <button type="submit" class="btn btn-primary" @click.prevent="addProduct">addProduct</button>
+        </form>
+      </div>
+
+    </div>
+
+
+
+  </div>
+  <br>
+  <br>
+  <br>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+import { constants } from 'crypto';
+const serverUrl = 'http://localhost:3000'
+export default{
+  name: 'addProduct',
+    methods:{
+          addProduct() {
+            axios.post(`${serverUrl}/product`, {
+                name: this.$refs.name.value,
+                quantity: this.$refs.quantity.value,
+                price: this.$refs.price.value
+            },{
+                headers:{
+                    access_token : localStorage.access_token
+                }
+            })
+                .then(({ data }) => {
+                  console.log('berhasil')
+                    this.$refs.name = ""
+                    this.$refs.price = ""
+                    this.$refs.quantity = ""
+                    this.$router.push('/myproduct' )
+                })
+                .catch(err => {
+                  console.log(err)
+                  
+                    this.$refs.price.value = ""
+                    this.$refs.name = ""
+                    this.$refs.quantity.value = ""
+               
+                })
+}
+    }
+
+}
+</script>
+
+
+
