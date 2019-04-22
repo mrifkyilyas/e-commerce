@@ -6,6 +6,8 @@ import login from './views/login'
 import register from './views/register'
 import myproduct from './views/myproduct'
 import addproduct from './views/addproduct'
+import updateproduct from './views/updateproduct'
+import detailproduct from './views/detailproduct'
 
 Vue.use(Router)
 
@@ -16,13 +18,9 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
-    },
-    {
-      path: '/products',
-      name: 'products',
       component: products
-    }, {
+    },
+  {
       path: '/login',
       name: 'login',
       component: login
@@ -37,7 +35,12 @@ export default new Router({
     {
       path: '/myproduct',
       name: 'myproduct',
-      component: myproduct
+      component: myproduct,
+      children:[
+       
+      
+
+      ]
 
     },
     {
@@ -45,7 +48,23 @@ export default new Router({
       name: 'addproduct',
       component: addproduct
 
-    }
+    },
+    {
+      path: '/products/',
+      name: 'products',
+      component: products,
+    }, 
+    {
+      path:'/product/:id',
+      name:'detailproduct',
+      component:detailproduct
+    },
+    {
+      path:'/myproduct/:id/update',
+      name:'updateproduct',
+      component:updateproduct
+     }
+    
 
   ]
 })

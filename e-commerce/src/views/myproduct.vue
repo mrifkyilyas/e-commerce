@@ -31,10 +31,13 @@
               <td>{{index+1}}</td>
               <td>{{myproduct.name}}</td>
               <td>{{myproduct.quantity}}</td>
-              <td>{{myproduct.image}}</td>
+              <td><img :src="myproduct.image" height="30px"></td>
               <td>{{myproduct.price}}</td>
               <td><a href="#" class="btn btn-danger"  @click="deleteProduct(myproduct._id)">delete</a>
-                <a href="#" class="btn btn-info">update</a></td>
+              <router-link :to="{ name: 'updateproduct', params: { id: myproduct._id }}">
+                <a href="#" class="btn btn-info">update</a>
+                </router-link>
+              </td>
             </tr>
           </tbody>
         </table>

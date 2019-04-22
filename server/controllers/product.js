@@ -2,12 +2,17 @@ const { Cart, User, Product } = require('../models/')
 class ControllerProduct {
     static createProduct(req, res) {
         console.log(req.body)
+        console.log(req.file)
         const { name, quantity, price } = req.body
         // const image = req.file
+        let image = "http://storage.googleapis.com/translate-my-pdf-cloud/1555142645610-index.jpeg"
+        if(req.file){
+            image = req.file.gcsUrl
+        }
         const seller = req.userLogin
         Product
             .create({
-                name, quantity, seller, price
+                name, quantity, seller, price,image
             })
             .then(succes => {
                 res.status(201).json(succes)
@@ -46,7 +51,7 @@ class ControllerProduct {
         Product.findOne({
             _id: req.params.id
         })
-            .populate('user')
+            .populate('seller')
             .then(result => {
                 res.status(200).json(result)
             })
@@ -56,6 +61,12 @@ class ControllerProduct {
     }
 
     static update(req, res) {
+        console.log('masuk ke update')
+        if(req.file){
+            req.body.image =req.file.gcsUrl
+        }
+        console.log(req.body)
+        req.body.updated_at = new Date().toISOString()
         Product.updateOne({
             _id: req.params.id
         }, {

@@ -22,6 +22,10 @@
             <label for="exampleInputprice">price</label>
             <input type="Number" class="form-control" id="exampleInputprice" ref="price" placeholder="price">
           </div>
+           <div class="form-group">
+            <label for="imageinput">image</label>
+            <input type="file" class="form-control" id="file" ref="file"  v-on:change="handleFileUpload">
+          </div>
           
           <button type="submit" class="btn btn-primary" @click.prevent="addProduct">addProduct</button>
         </form>
@@ -44,13 +48,26 @@ import { constants } from 'crypto';
 const serverUrl = 'http://localhost:3000'
 export default{
   name: 'addProduct',
+  data(){
+    return {
+      file:''
+
+    }
+  },
     methods:{
+        handleFileUpload(event) {
+            console.log('masuk file upload', this.$refs.file.files[0])
+            this.file = this.$refs.file.files[0]
+
+        },
           addProduct() {
-            axios.post(`${serverUrl}/product`, {
-                name: this.$refs.name.value,
-                quantity: this.$refs.quantity.value,
-                price: this.$refs.price.value
-            },{
+            console.log(this.file)
+             let formData = new FormData()
+            formData.append('name', this.$refs.name.value)
+            formData.append('quantity', this.$refs.quantity.value)
+            formData.append('price', this.$refs.price.value)
+            formData.append('file', this.file)
+            axios.post(`${serverUrl}/product`,formData,{
                 headers:{
                     access_token : localStorage.access_token
                 }

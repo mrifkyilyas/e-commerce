@@ -1,6 +1,8 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-danger bg-danger fixed-top">
-    <a class="navbar-brand position text-light" href="#"><i class="fa fa-scissors" aria-hidden="true"></i>ATKQue</a>
+       <router-link to="/">
+           <a class="navbar-brand position text-light" href="#"><i class="fa fa-scissors" aria-hidden="true"></i>beliDong.com</a>
+             </router-link>  
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
